@@ -5,6 +5,7 @@
 		<type>stan</type>
 		<id>0</id>
 		<nextscene>0</nextscene>
+		<graphic>9mi-0</graphic>
 		<text>
 			<t>[9mi]@Hello there!</t>
 		</text>
