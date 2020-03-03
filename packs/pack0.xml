@@ -1,0 +1,12 @@
+<nona>
+	<totalscenes>1</totalscenes>
+	<package>0</package>
+	<scene0>
+		<type>stan</type>
+		<id>0</id>
+		<nextscene>0</nextscene>
+		<text>
+			<t>[9mi]@Hello there!</t>
+		</text>
+	</scene0>
+</nona>

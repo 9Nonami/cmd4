@@ -1,0 +1,4 @@
+Main-Class: nona/mi/cmd4/main/Main
+Class-Path: lib/jsoup.jar
+
+

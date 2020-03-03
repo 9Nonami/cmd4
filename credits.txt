@@ -1,0 +1,2 @@
+This engine was programmed by 9Nonami.@https://github.com/9Nonami@@jsoup is the library that makes it possible to work with xml.@The jsoup code-base (including source and compiled packages) are distributed under the open source MIT license.@
+Jonathan Hedley (https://jsoup.org/)
