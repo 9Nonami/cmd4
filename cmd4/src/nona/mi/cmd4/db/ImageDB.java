@@ -13,7 +13,7 @@ public class ImageDB {
     public ImageDB(String path) {
         hashMap = new HashMap<String, char[]>();
         File[] allImages = new DirectoryLoader().load(path);
-        if (allImages.length != 0) {
+        if (allImages != null) {
             for (int i = 0; i < allImages.length; i++) {
                 String tempFileName = allImages[i].getName();
                 String name = tempFileName.substring(0, tempFileName.lastIndexOf("."));
