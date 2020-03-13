@@ -2,6 +2,7 @@ package nona.mi.cmd4.save;
 
 import nona.mi.cmd4.loader.TextLoader;
 import nona.mi.cmd4.main.Game;
+import nona.mi.cmd4.scene.Scene;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,14 +11,20 @@ import java.io.FileWriter;
 public class Save {
 
     private String[] slots; //contem "p-s"; o &\n eh adicionado no loop
+    private String[] traces;
     private File folderPath;
     private File savePath;
+    private Tracer tracer; //armazena os ids das cenas esolhidas
 
 
 
     public Save(Game game, int totalSlots) {
 
+        tracer = new Tracer();
+
+        traces = new String[totalSlots];
         slots = new String[totalSlots];
+
         folderPath = new File("");
 
         if (game.getOs().startsWith("l")) {
@@ -40,13 +47,13 @@ public class Save {
         }
 
         load();
-
     }
 
     private void createBasicSaveFile(File savePath) {
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(savePath))){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(savePath))) {
+            String basicTrace = "" + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE;
             for (int i = 0; i < slots.length; i++) {
-                bw.write("0-0&\n");
+                bw.write("0-0;" + basicTrace + "&\n");
             }
             bw.flush();
         } catch (Exception ex){
@@ -54,17 +61,22 @@ public class Save {
         }
     }
 
-    public void load() {
+    public void load() { //0-0;-97,-97,-97,-97,-97,-97,-97,-97,-97,-97&
         String loaded = TextLoader.loadFromDisk(savePath);
         String[] splitted = loaded.split("&");
-        System.arraycopy(splitted, 0, slots, 0, slots.length); //copia o array lido para o array da classe (slots)
+        for (int i = 0; i < slots.length; i++) {
+            String[] sp = splitted[i].split(";");
+            slots[i] = sp[0];
+            traces[i] = sp[1];
+        }
     }
 
     public void save(int slot, int pack, int scene) {
         slots[slot] = "" + pack + "-" + scene;
+        traces[slot] = tracer.getTracesAsString();
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(savePath))) {
-            for (String s : slots) {
-                bw.write(s + "&\n");
+            for (int i = 0; i < slots.length; i++) {
+                bw.write(slots[i] + ";" + traces[i] + "&\n");
             }
             bw.flush();
         } catch (Exception ex) {
@@ -74,14 +86,24 @@ public class Save {
 
     public void delete(int slot) {
         slots[slot] = "0-0";
+        traces[slot] = "" + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE + "," + Scene.NO_SCENE;
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(savePath))) {
-            for (String s : slots) {
-                bw.write(s + "&\n");
+            for (int i = 0; i < slots.length; i++) {
+                bw.write(slots[i] + ";" + traces[i] + "&\n");
             }
             bw.flush();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void initTracer(int slot) {
+        String[] ss = traces[slot].split(",");
+        int[] temp = new int[ss.length];
+        for (int i = 0; i < ss.length; i++) {
+            temp[i] = Integer.parseInt(ss[i]);
+        }
+        tracer.setTraces(temp);
     }
 
     public int getPackOfSlot(int slot) {
@@ -103,4 +125,9 @@ public class Save {
     public File getFolderPath() {
         return folderPath;
     }
+
+    public Tracer getTracer() {
+        return tracer;
+    }
+
 }

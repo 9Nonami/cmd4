@@ -28,7 +28,8 @@ public class StandardScene extends Scene {
             if (dialog.isEndDialog()) {
                 if (nextScene == MAIN_SCENE || nextScene == CREDIT_SCENE) {
                     game.goToPublicSceneWithReset(nextScene);
-                } else if (nextScene >= 0) {
+                } else if (nextScene >= 0 || nextScene == LAST_SCENE) {
+                    game.getSave().getTracer().add(sceneId);
                     game.goToNextSceneWithReset();
                 } else {
                     //virah para cah se nextScene == NO_SCENE
@@ -36,7 +37,10 @@ public class StandardScene extends Scene {
                 }
             }
         } else {
-            if (nextScene >= 0) {
+        	if (nextScene == MAIN_SCENE || nextScene == CREDIT_SCENE) {
+                game.goToPublicSceneWithReset(nextScene);
+            } else if (nextScene >= 0 || nextScene == LAST_SCENE) {
+                game.getSave().getTracer().add(sceneId);
                 game.goToNextSceneWithReset();
             }
         }
@@ -47,6 +51,10 @@ public class StandardScene extends Scene {
         if (dialog != null) {
             dialog.render();
         }
+    }
+
+    public Dialog getDialog() {
+        return dialog;
     }
 
     @Override

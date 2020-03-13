@@ -27,6 +27,7 @@ public class Game {
     private int graphicWidth;
     private int graphicHeight;
 
+    public static final int TOTAL_TRACE = 10;
 
 
     public Game() {
@@ -70,6 +71,9 @@ public class Game {
         creditScene.setCredits(TextLoader.loadFromDisk(new File(createPath(new String[]{"credits.txt"}))));
         publicScenesPackage.put(creditScene.getSceneId(), creditScene);
 
+        HistoryScene historyScene = new HistoryScene(this, null, Scene.NO_PACK, Scene.HISTORY_SCENE, Scene.NO_SCENE);
+        publicScenesPackage.put(historyScene.getSceneId(), historyScene);
+
     }
 
     private void defineFirstScene() {
@@ -79,6 +83,7 @@ public class Game {
     public void goToNextSceneWithReset() {
         int tempNextScene = sceneBasis.getNextScene();
         if (tempNextScene == Scene.LAST_SCENE) {
+            save.getTracer().setEmptyTraces();
             int tempNextPack = sceneBasis.getNextPack();
             loadPack(tempNextPack, 0);
         } else {
@@ -136,6 +141,10 @@ public class Game {
 
     public Scene getPublicScene(int id) {
         return publicScenesPackage.getScene(id);
+    }
+
+    public Scene getSceneOfCurrentPack(int id) {
+        return packBasis.getScene(id);
     }
 
     public String getInput() {

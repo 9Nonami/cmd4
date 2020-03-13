@@ -44,6 +44,8 @@ public class LoadScene extends Scene {
                     //load em pack diferente do atual
                     game.loadPack(game.getSave().getPackOfSlot(chosenSlot), game.getSave().getSceneOfSlot(chosenSlot));
                 }
+                //fill tracer
+                game.getSave().initTracer(chosenSlot);
             }
         } catch (Exception ex) {
 

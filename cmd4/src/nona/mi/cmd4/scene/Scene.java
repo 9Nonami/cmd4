@@ -5,8 +5,8 @@ import nona.mi.cmd4.main.Game;
 
 public abstract class Scene {
 
-    private int sceneId;
-    private int packId;
+    protected int sceneId;
+    protected int packId;
     private char[] image;
     protected int nextScene;
     protected int nextPack;
@@ -20,7 +20,7 @@ public abstract class Scene {
     public static final int COPY_SCENE = -92;
     public static final int DELETE_SCENE = -91;
     public static final int CREDIT_SCENE = -90;
-
+    public static final int HISTORY_SCENE = -89;
 
 
     public Scene(Game game, char[] image, int packId, int sceneId, int nextScene) {
@@ -63,7 +63,7 @@ public abstract class Scene {
             tempLoadScene.setTempScene(sceneId);
             game.goToPublicSceneWithReset(LOAD_SCENE);
             return true;
-        } else if (playerInput.equalsIgnoreCase("save") && sceneId != MAIN_SCENE && sceneId != LOAD_SCENE && sceneId != SAVE_SCENE && sceneId != COPY_SCENE && sceneId != DELETE_SCENE && sceneId != CREDIT_SCENE) {
+        } else if (playerInput.equalsIgnoreCase("save") && sceneId != MAIN_SCENE && sceneId != LOAD_SCENE && sceneId != SAVE_SCENE && sceneId != COPY_SCENE && sceneId != DELETE_SCENE && sceneId != CREDIT_SCENE && sceneId != HISTORY_SCENE) {
             SaveScene tempSaveScene = (SaveScene) game.getPublicScene(SAVE_SCENE);
             tempSaveScene.setTempPack(packId);
             tempSaveScene.setTempScene(sceneId);
@@ -81,6 +81,13 @@ public abstract class Scene {
             tempDeleteScene.setTempScene(sceneId);
             game.goToPublicSceneWithReset(DELETE_SCENE);
             return true;
+        } else if (playerInput.equalsIgnoreCase("history") && sceneId != HISTORY_SCENE && sceneId != CREDIT_SCENE && sceneId != MAIN_SCENE && sceneId != SAVE_SCENE && sceneId != LOAD_SCENE && sceneId != COPY_SCENE && sceneId != DELETE_SCENE) {
+            HistoryScene tempHistoryScene = (HistoryScene) game.getPublicScene(HISTORY_SCENE);
+            tempHistoryScene.setTempPack(packId);
+            tempHistoryScene.setTempScene(sceneId);
+            tempHistoryScene.checkInitialId();
+            game.goToPublicSceneWithReset(HISTORY_SCENE);
+            return true;            
         }
 
         return false;

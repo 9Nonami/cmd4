@@ -20,6 +20,7 @@ public class MainScene extends Scene {
     protected void updateClass(String playerInput) {
         if (playerInput.equalsIgnoreCase("start")) {
             game.loadPack(0, 0);
+            game.getSave().getTracer().setEmptyTraces();
         } else if (playerInput.equalsIgnoreCase("credits")) {
             game.goToPublicSceneWithReset(CREDIT_SCENE);
         }
