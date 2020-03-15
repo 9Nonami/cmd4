@@ -41,9 +41,10 @@ public class SaveScene extends Scene {
 
     @Override
     protected void renderClass() {
-        String[] tempSlots = game.getSave().getSlots();
-        for (int i = 0; i < tempSlots.length; i++) {
-            System.out.println("[" + i + "] " + tempSlots[i]);
+        String[] tempSentences = game.getSave().getSentences();
+        String[] tempDates = game.getSave().getDates();
+        for (int i = 0; i < tempSentences.length; i++) {
+            System.out.println("[" + i + "] " + tempSentences[i] + "... | " + tempDates[i]);
         }
     }
 

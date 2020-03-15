@@ -2,19 +2,18 @@ package nona.mi.cmd4.scene;
 
 import nona.mi.cmd4.main.Game;
 
-
-public class LoadScene extends Scene {
+public class DeleteScene extends Scene {
 
     private int tempPack;
     private int tempScene;
 
 
 
-    public LoadScene(Game game, char[] image, int packId, int sceneId, int nextScene) {
+    public DeleteScene(Game game, char[] image, int packId, int sceneId, int nextScene) {
         super(game, image, packId, sceneId, nextScene);
     }
 
-    public LoadScene(Game game, char[] image, int packId, int sceneId, int nextPack, int nextScene) {
+    public DeleteScene(Game game, char[] image, int packId, int sceneId, int nextPack, int nextScene) {
         super(game, image, packId, sceneId, nextPack, nextScene);
     }
 
@@ -35,17 +34,7 @@ public class LoadScene extends Scene {
         try {
             int chosenSlot = Integer.parseInt(playerInput);
             if (game.getSave().contains(chosenSlot)) {
-                if (tempPack == game.getSave().getPackOfSlot(chosenSlot)) {
-                    //esta dando load em cena do pack atual
-                    nextPack = game.getSave().getPackOfSlot(chosenSlot);
-                    nextScene = game.getSave().getSceneOfSlot(chosenSlot);
-                    game.goToNextSceneWithReset();
-                } else {
-                    //load em pack diferente do atual
-                    game.loadPack(game.getSave().getPackOfSlot(chosenSlot), game.getSave().getSceneOfSlot(chosenSlot));
-                }
-                //fill tracer
-                game.getSave().initTracer(chosenSlot);
+                game.getSave().delete(chosenSlot);
             }
         } catch (Exception ex) {
 
@@ -55,9 +44,10 @@ public class LoadScene extends Scene {
 
     @Override
     protected void renderClass() {
-        String[] tempSlots = game.getSave().getSlots();
-        for (int i = 0; i < tempSlots.length; i++) {
-            System.out.println("[" + i + "] " + tempSlots[i]);
+        String[] tempSentences = game.getSave().getSentences();
+        String[] tempDates = game.getSave().getDates();
+        for (int i = 0; i < tempSentences.length; i++) {
+            System.out.println("[" + i + "] " + tempSentences[i] + "... | " + tempDates[i]);
         }
     }
 
@@ -73,5 +63,4 @@ public class LoadScene extends Scene {
     public void reset() {
 
     }
-
 }

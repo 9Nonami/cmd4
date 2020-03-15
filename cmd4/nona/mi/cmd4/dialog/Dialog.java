@@ -1,5 +1,9 @@
 package nona.mi.cmd4.dialog;
 
+import nona.mi.cmd4.save.Save;
+
+
+
 public class Dialog {
 
     private String[] dg;
@@ -36,6 +40,21 @@ public class Dialog {
 
     public boolean isEndDialog() {
         return endDialog;
+    }
+
+    public String getDialogForSave() {
+    	if (dg != null) {
+    		String s = dg[0];
+    		if (s.contains("@")) {
+    			s = s.replace('@', ' ');
+    		}
+    		if (s.length() > Save.SAVE_TEXT_OFFSET) {
+    			return s.substring(0, Save.SAVE_TEXT_OFFSET);
+    		} else {
+    			return s;
+    		}
+    	}
+    	return "Empty dialog.";
     }
 
     public void reset() {

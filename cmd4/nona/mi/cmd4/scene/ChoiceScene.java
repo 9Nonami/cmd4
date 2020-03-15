@@ -1,6 +1,9 @@
 package nona.mi.cmd4.scene;
 
 import nona.mi.cmd4.main.Game;
+import nona.mi.cmd4.save.Save;
+
+
 
 public class ChoiceScene extends Scene {
 
@@ -71,6 +74,20 @@ public class ChoiceScene extends Scene {
         for (int i = 0; i < choices.length; i++) {
             System.out.println("[" + i + "] " + choices[i]);
         }
+    }
+
+    public String getDescriptionForSave() {
+    	if (description != null) {
+    		if (description.contains("@")) {
+    			description = description.replace('@', ' ');
+    		}
+    		if (description.length() > Save.SAVE_TEXT_OFFSET) {
+    			return description.substring(0, Save.SAVE_TEXT_OFFSET);
+    		} else {
+    			return description;
+    		}
+    	}
+    	return "Empty description";
     }
 
     @Override
